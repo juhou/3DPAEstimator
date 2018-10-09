@@ -16,6 +16,7 @@ Requirements:
 1. compile mex (mesh_thk_mex.h) from [Mesh Thickness Calculator](https://github.com/whahnize/MESH-THK)
 2. run p_axis_est.m 
 
+Sorry. Some parts of this project is still under construction.
 
 ## Citation
 If you find our work useful in your research, please consider citing:
