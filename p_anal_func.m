@@ -1,10 +1,10 @@
 function [ result ] = p_anal_func(model_path, mesh_name, degree_z )
-%P_ANAL_FUNC Summary of this function goes here
 
-
-
-%   Detailed explanation goes here
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Mesh thickness calculation funcion
+% please refer this link for details: https://github.com/whahnize/MESH-THK
 depth_img=mesh_thk_mex(strcat(model_path, mesh_name),compute_rotation([1 0 0], degree_z*pi/180),0);
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Highpass filter generation
 PQ = paddedsize(size(depth_img));
@@ -30,22 +30,6 @@ HPF_depth_img1((HPF_depth_img1 < (0.5-tau)) ) = 0.5-tau;
 HPF_depth_img1((HPF_depth_img1 > (0.5+tau))) = 0.5+tau;
 HPF_depth_img2 = imadjust(HPF_depth_img1, stretchlim(HPF_depth_img1),[]);   
 % HPF_depth_img2=HPF_depth_img1;
-
-
-
-% BW = edge(HPF_depth_img2,'canny', 0.9);
-% figure, imshow(BW)
-% HPF_depth_img2 = imfilter(HPF_depth_img2, [1,1,1;1,4,1;1,1,1]/12);
-% figure, imshow(HPF_depth_img2)
-% Options.kernelratio = 5;
-% Options.windowratio = 5;
-% HPF_depth_img3=NLMF(HPF_depth_img2, Options);
-% figure; imshow(HPF_depth_img3);
-% resi = HPF_depth_img2 - HPF_depth_img3;
-% resi2=  imadjust(resi, stretchlim(resi),[]);  
-% figure; imshow(resi2, []);
-
-
 
 % final high-pass filtering
 F=fft2(double(HPF_depth_img2.*w),size(H,1),size(H,2));
